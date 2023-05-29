@@ -8,12 +8,14 @@ import {
 } from "../controllers/users.controllers.js";
 import { validateSchema } from "../middlewares/validateSchema.js";
 import { userFollowingSchema } from "../schemas/user.schemas.js";
+import { validateAuth } from "../middlewares/validateAuth.js";
 
 const usersRoutes = Router();
 
 usersRoutes.post(
   "/users/me/following",
   validateSchema(userFollowingSchema),
+  validateAuth,
   followUser
 );
 usersRoutes.get("/users", getAllUsers);

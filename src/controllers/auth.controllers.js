@@ -11,7 +11,7 @@ export async function signUp(req, res) {
   try {
     const user = await getUserByEmail(email);
     if (user.rowCount !== 0)
-      return res.status(409).send("E-mail já cadastrado");
+      return res.status(409).send({ message: "E-mail já cadastrado" });
 
     const hash = bcrypt.hashSync(password, 10);
     await createUser(name, email, photo, bio, hash);

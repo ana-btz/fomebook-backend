@@ -10,3 +10,21 @@ export function createUser(name, email, photo, bio, hash) {
     [name, email, photo, bio, hash]
   );
 }
+
+export function insertUserFollow(followedUserId, userId) {
+  return db.query(
+    `INSERT INTO follows ("followingUserId", "followedUserId") VALUES ($1, $2)`,
+    [userId, followedUserId]
+  );
+}
+
+export function getUserByIdQuery(id) {
+  return db.query(`SELECT * FROM users WHERE id = $1`, [id]);
+}
+
+export function findRelation(followedUserId, userId) {
+  return db.query(
+    `SELECT * FROM follows WHERE "followingUserId" = $1 AND "followedUserId" = $2`,
+    [userId, followedUserId]
+  );
+}
