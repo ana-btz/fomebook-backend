@@ -1,6 +1,7 @@
 import {
   findRelation,
   getUserByIdQuery,
+  getUsers,
   insertUserFollow,
 } from "../repositories/users.repository.js";
 
@@ -30,7 +31,8 @@ export async function followUser(req, res) {
 
 export async function getAllUsers(req, res) {
   try {
-    res.send("getAllUsers");
+    const { rows } = await getUsers();
+    res.status(200).send(rows);
   } catch (error) {
     res.status(500).send(error.message);
   }
