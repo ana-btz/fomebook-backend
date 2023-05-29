@@ -10,7 +10,8 @@ export async function signUp(req, res) {
   const { name, email, photo, bio, password } = req.body;
   try {
     const user = await getUserByEmail(email);
-    if (user.rowCount !== 0) res.status(409).send("E-mail já cadastrado");
+    if (user.rowCount !== 0)
+      return res.status(409).send("E-mail já cadastrado");
 
     const hash = bcrypt.hashSync(password, 10);
     await createUser(name, email, photo, bio, hash);
@@ -27,7 +28,7 @@ export async function signIn(req, res) {
   try {
     const user = await getUserByEmail(email);
     if (user.rowCount === 0)
-      res.status(401).send({ message: "E-mail não cadastrado" });
+      return res.status(401).send({ message: "E-mail não cadastrado" });
 
     const isPasswordCorrect = bcrypt.compareSync(
       password,
